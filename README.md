@@ -4,7 +4,7 @@ Text_generator
 Вызов
 ==============
 
-echo $stg->run(
+echo $tg->run(
 	$text = 'test.txt',
 	$url = array(),
 	$use_vars = array(
