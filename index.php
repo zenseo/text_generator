@@ -1,15 +1,19 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 
-setlocale(LC_ALL, 'ru_RU.UTF-8'); 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+$debug = 1;
+if($debug > 0) {
+	ini_set('error_reporting', E_ALL);
+	ini_set ('display_errors', 1);
+}
+
+define("PATH_TEXT_GENERATOR", $_SERVER['DOCUMENT_ROOT']."/text_generator/");
  
-include_once($_SERVER['DOCUMENT_ROOT']."/text_generator/classes/tg.class.php");
+include_once(PATH_TEXT_GENERATOR."classes/tg.class.php");
 $tg = new tg();
  
-$tg->run( 
+echo $tg->run( 
 	$text = 'test.txt', 
-	$url = array(), 
+	$uid = array(), 
 	$use_vars = array( 'name' => 'Test' ) 
 );

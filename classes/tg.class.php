@@ -2,18 +2,17 @@
 
 class Tg {
 
-	const PATH_TG = '/text_generator';
 	public $tmp_value;
 
-	public function run($file_name = '', $url = array(), $info = array(), $cache_on = 1) {
+	public function run($file_name = '', $uid = array(), $info = array(), $cache_on = 1) {
 		$out = '';
-		$url = empty($url) ? $_SERVER['REQUEST_URI'] : $url; 
+		$uid = empty($uid) ? $_SERVER['REQUEST_URI'] : $uid; 
 
-		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TG.'/text/'.$file_name;
+		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TEXT_GENERATOR.'/text/'.$file_name;
 
 		if(file_exists($path)) { 
  			
-			$cache = unserialize($this->get_cache($url)); 
+			$cache = unserialize($this->get_cache($uid)); 
 
 			if(!isset($cache[$file_name])) {
  					
@@ -28,7 +27,7 @@ class Tg {
 				}
 
  				if($cache_on > 0) {
- 					$this->set_cache($set_cache,$url);						
+ 					$this->set_cache($set_cache,$uid);						
  				}
 
 			} else { 
@@ -152,17 +151,17 @@ class Tg {
     	return (string) $xml->inflection[$val];
 	}
 
-	private function get_cache($url) {
+	private function get_cache($uid) {
 		$out = '';
-		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TG.'/cache/'.md5($url);
+		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TEXT_GENERATOR.'/cache/'.md5($uid);
 		if(file_exists($path)) {
 			$out = file_get_contents($path); 
 		}
 		return $out;
 	}
 
-	private function set_cache($text, $url) {
-		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TG.'/cache/'.md5($url); 
+	private function set_cache($text, $uid) {
+		$path = $_SERVER['DOCUMENT_ROOT'].self::PATH_TEXT_GENERATOR.'/cache/'.md5($uid); 
 		$fp = fopen($path,"wb+");
     	flock ($fp,LOCK_EX);
     	fwrite($fp,   $text);
