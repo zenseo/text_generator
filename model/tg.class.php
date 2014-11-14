@@ -72,10 +72,6 @@ class Tg {
 						$content = mb_convert_case($content, MB_CASE_TITLE, "UTF-8");
 					break;
 
-					case 'lowfirst': 
-						$content = $this->lowercase_first_word($content);
-					break;
-					
 					case 'upfirst': 
 						$content = $this->lowercase_up_word($content);
 					break;
@@ -170,18 +166,10 @@ class Tg {
     	chmod($path, 0777);
 	}
 
-	public function lowercase_first_word($word) {
-		$out = '';
-		$word = explode(' ',$word);
-		$out = mb_convert_case($word[0], MB_CASE_LOWER, "UTF-8");
-		unset($word[0]);
-		return $out.' '.implode(' ',$word); 
-	}
-
 	public function lowercase_up_word($word) {
 		$out = '';
 		$word = explode(' ',$word);
-		$out = mb_convert_case($word[0], MB_CASE_UPPER, "UTF-8");
+		$out = mb_convert_case($word[0], MB_CASE_TITLE, "UTF-8");
 		unset($word[0]);
 		return $out.' '.implode(' ',$word); 
 	}
